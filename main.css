@@ -59,36 +59,63 @@ h1 {
   font-family: 'Roboto', Arial, sans-serif;
 }
 
+/* Timeline container: horizontal scroll by default */
 .timeline {
   display: flex;
   flex-direction: row;
   gap: 36px;
   overflow-x: auto;
+  overflow-y: hidden;
   padding: 36px 0 24px 0;
   margin: 0 auto 10px auto;
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
-  max-width: 1200px;           /* Limit timeline width on large screens */
+  max-width: 1200px;
   box-sizing: border-box;
+  height: 340px; /* Set a fixed height for square boxes */
 }
 
-/* Responsive: stack vertically on small screens */
+/* Timeline event: square boxes for all screens */
+.timeline-event {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.09);
+  padding: 0;
+  width: 300px;
+  min-width: 300px;
+  height: 300px;           /* Square shape */
+  text-align: center;
+  transition: transform 0.25s cubic-bezier(.4,2,.6,1), box-shadow 0.2s;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  scroll-snap-align: start;
+}
+
+/* Responsive: vertical scroll on small screens, keep boxes square */
 @media (max-width: 800px) {
   .timeline {
     flex-direction: column;
-    overflow-x: visible;
-    overflow-y: visible;
+    overflow-x: hidden;
+    overflow-y: auto;
     gap: 28px;
     max-width: 98vw;
+    height: auto; /* Let height grow with content */
     padding: 24px 0 24px 0;
-    scroll-snap-type: none;
+    scroll-snap-type: y mandatory;
   }
   .timeline-event {
-    width: 98vw;
+    width: 90vw;
     min-width: 0;
-    max-width: 480px;
+    max-width: 98vw;
+    height: 90vw; /* Keep square shape on mobile */
+    max-height: 98vw;
     margin: 0 auto;
-    scroll-snap-align: none;
+    scroll-snap-align: start;
   }
 }
 
@@ -100,31 +127,6 @@ h1 {
 .timeline {
   -ms-overflow-style: none;
   scrollbar-width: none;
-}
-
-.timeline-event {
-  background: #fff;
-  border-radius: 14px;
-  box-shadow: 0 4px 18px rgba(0,0,0,0.09);
-  padding: 0;
-  width: 270px;
-  min-width: 270px;
-  text-align: center;
-  transition: transform 0.25s cubic-bezier(.4,2,.6,1), box-shadow 0.2s;
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-  scroll-snap-align: start;         /* Snap each card to the start of the scroll area */
-}
-
-.timeline-event:hover,
-.timeline-event:focus {
-  transform: scale(1.045) translateY(-6px); /* Subtle scale and lift effect */
-  box-shadow: 0 10px 32px rgba(0,0,0,0.13);
 }
 
 .timeline-year {
@@ -215,4 +217,11 @@ h1 {
   display: inline-block;
   z-index: 3;
   position: relative;
+}
+
+.bg-dark {
+  background-color: #222 !important;
+}
+.text-light {
+  color: #fff !important;
 }
